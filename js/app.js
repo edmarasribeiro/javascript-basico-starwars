@@ -42,15 +42,46 @@ const LIST = [
 ]
 
 const App = new Vue({ //constante é uma nova instância do Vue.js
-    el:'#app',
-    data: {
+    el:'#app', //objeto que representa o elemento principal
+    data: { //armazena os dados que podem ser exibidos na página
         title: 'Star Wars Lego',
         userName: 'Edmara',
-        characters: LIST
+        characters: LIST,
+        searchName: ''
     },
     methods: {
         like(userName) {
             alert(`O personagem ${userName} recebeu um like!`)
+        },
+        remove(id){
+            const list = this.characters
+
+            const result = list.filter (item => {
+                return item.id !== id
+            })
+
+            this.characters = result 
+        },
+        search(){
+
+            if(this.searchName === ''){
+                return alert('O campo de busca é obrigatório.')
+                
+            }
+
+            const list = this.characters = LIST // carrega todos os personagens na lista e ao realizar uma nova busca, é atualizado novamente a lista
+
+            const result = list.filter(item =>{ // função de seta - faz um filtro percorrendo por todos os itens da lista
+                return item.nome === this.searchName // só retorna o personagem que tiver o nome do buscar "searchName"
+            })
+
+            if(result.length <= 0 ){
+                alert('Nenhum registro encontrado.')
+            } else {
+
+                this.characters = result
+            }
+
         }
     }
 }) 
